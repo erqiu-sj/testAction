@@ -1,0 +1,22 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  toServer:
+    name: continuous integration
+    runs-on: macos-latest
+    steps:
+      - name: getCode # 获取源码
+        uses: actions/checkout@master
+
+      - name: build # 构建和部署
+        uses: JamesIves/github-pages-deploy-action@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: master
+          FOLDER: build
+          BUILD_SCRIPT: npm install && npm run build
